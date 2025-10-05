@@ -1,0 +1,53 @@
+# Documentation and wireframes (as requested)
+docs/
+
+# Database configuration (contains sensitive credentials)
+src/config/database.php
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Operating System files
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# PHP
+*.log
+*.cache
+vendor/
+composer.phar
+
+# Test files
+src/test.php
+src/test2.php
+src/handlers/test_db.php
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.old
+
+# Node modules (if using any build tools)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Upload directories (optional - uncomment if uploads contain user data)
+# uploads/
+# assets/images/uploads/
+
+# Session files
+sessions/
+tmp/

@@ -1,0 +1,17 @@
+/* Legacy edit styles - now integrated into main theme */
+/* Styles are now handled in the individual edit.php file with Italian theme integration */
+
+.legacy-input-group {
+    display: flex;
+    align-items: center;
+}
+
+.legacy-input-group-addon {
+    background-color: var(--italian-green, #009246);
+    border: 1px solid var(--italian-green, #009246);
+    color: #fff;
+    padding: 6px 12px;
+    font-size: 1rem;
+    height: 2.4rem;
+    font-weight: 600;
+}
