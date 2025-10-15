@@ -1,12 +1,487 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" 
+        integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="icon" type="image/svg+xml" href="../../assets/images/pizza.svg">
-    <title>Document</title>
+    <title>Sucursales & Delivery - Il Napolitano</title>
+    <meta name="description" content="Encontrá nuestras sucursales en San Martín y zona norte del GBA. Delivery rápido y confiable a toda la zona.">
+    <style>
+        .sucursales-hero {
+            background: linear-gradient(135deg, var(--italian-green) 0%, var(--italian-red) 100%);
+            padding: 4rem 2rem;
+            text-align: center;
+            color: white;
+            margin-top: 80px;
+        }
+
+        .sucursales-hero h1 {
+            font-family: var(--font-display);
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .sucursales-hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .sucursales-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            text-align: center;
+            color: var(--italian-red);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: var(--italian-gradient);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+            padding: 2rem;
+            transition: var(--transition);
+            border-top: 4px solid var(--italian-green);
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-strong);
+        }
+
+        .location-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--italian-red);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-card h3 i {
+            color: var(--italian-green);
+        }
+
+        .location-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-family: var(--font-body);
+        }
+
+        .info-item i {
+            color: var(--italian-green);
+            width: 20px;
+            margin-top: 3px;
+        }
+
+        .info-item strong {
+            display: block;
+            color: var(--color-nav);
+            margin-bottom: 0.25rem;
+        }
+
+        .schedule {
+            background: var(--italian-cream);
+            padding: 1rem;
+            border-radius: var(--border-radius-small);
+            margin-top: 1rem;
+        }
+
+        .schedule-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .schedule-item:last-child {
+            border-bottom: none;
+        }
+
+        .map-button {
+            display: inline-block;
+            background: var(--italian-green);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-small);
+            text-decoration: none;
+            font-weight: bold;
+            transition: var(--transition);
+            margin-top: 1rem;
+        }
+
+        .map-button:hover {
+            background: var(--olive-green);
+            transform: scale(1.05);
+        }
+
+        .delivery-section {
+            background: linear-gradient(135deg, var(--italian-cream) 0%, white 100%);
+            padding: 3rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-light);
+        }
+
+        .delivery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .delivery-card {
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: var(--border-radius-small);
+            box-shadow: var(--shadow-light);
+        }
+
+        .delivery-card i {
+            font-size: 3rem;
+            color: var(--italian-red);
+            margin-bottom: 1rem;
+        }
+
+        .delivery-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            color: var(--color-nav);
+            margin-bottom: 0.5rem;
+        }
+
+        .coverage-zones {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-light);
+        }
+
+        .zones-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .zone-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: var(--italian-cream);
+            border-radius: var(--border-radius-small);
+            font-weight: 500;
+        }
+
+        .zone-item i {
+            color: var(--italian-green);
+        }
+
+        @media (max-width: 768px) {
+            .sucursales-hero h1 {
+                font-size: 2rem;
+            }
+
+            .locations-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .delivery-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
-    
+    <header>
+        <div id="header-container">
+            <div id="logo">
+                <a href="../index.php"><img src="../../assets/images/pizza.svg" alt="logo napolitano"></a>
+                <a href="../index.php"><img class="logo-text" src="../../assets/images/text.svg" alt="nombre pizzeria"></a>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../index.php">HOME</a></li>
+                    <li><a href="nosotros.html">NOSOTROS</a></li>
+                    <li><a href="sucursales.html">SUCURSALES & DELIVERY</a></li>
+                    <li><a href="contacto.html">CONTACTO</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="sucursales-hero">
+        <h1><i class="fas fa-map-marker-alt"></i> Nuestras Sucursales</h1>
+        <p>Visitanos en cualquiera de nuestras ubicaciones o pedí delivery. ¡Te esperamos con las mejores pizzas al estilo napolitano!</p>
+    </section>
+
+    <div class="sucursales-container">
+        <h2 class="section-title">Ubicaciones</h2>
+        
+        <div class="locations-grid">
+            <!-- Sucursal Centro -->
+            <div class="location-card">
+                <h3><i class="fas fa-store"></i> Il Napolitano Centro</h3>
+                <div class="location-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Dirección</strong>
+                            Av. San Martín 2458, San Martín (B1650)<br>
+                            Buenos Aires, Argentina
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Teléfono</strong>
+                            (011) 4755-3344 / WhatsApp: +54 9 11 3344-5566
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Horarios</strong>
+                            <div class="schedule">
+                                <div class="schedule-item">
+                                    <span>Lunes a Jueves</span>
+                                    <span>11:00 - 23:30</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Viernes y Sábado</span>
+                                    <span>11:00 - 01:00</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Domingo</span>
+                                    <span>18:00 - 23:30</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://maps.google.com/?q=Av.+San+Martin+2458,+San+Martin,+Buenos+Aires" target="_blank" class="map-button">
+                    <i class="fas fa-map"></i> Ver en Mapa
+                </a>
+            </div>
+
+            <!-- Sucursal Villa Ballester -->
+            <div class="location-card">
+                <h3><i class="fas fa-store"></i> Il Napolitano Villa Ballester</h3>
+                <div class="location-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Dirección</strong>
+                            Av. Ballester 834, Villa Ballester (B1653)<br>
+                            Buenos Aires, Argentina
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Teléfono</strong>
+                            (011) 4768-1122 / WhatsApp: +54 9 11 2233-4455
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Horarios</strong>
+                            <div class="schedule">
+                                <div class="schedule-item">
+                                    <span>Lunes a Jueves</span>
+                                    <span>11:30 - 23:30</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Viernes y Sábado</span>
+                                    <span>11:30 - 01:00</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Domingo</span>
+                                    <span>18:00 - 23:30</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://maps.google.com/?q=Av.+Ballester+834,+Villa+Ballester,+Buenos+Aires" target="_blank" class="map-button">
+                    <i class="fas fa-map"></i> Ver en Mapa
+                </a>
+            </div>
+
+            <!-- Sucursal Vicente López -->
+            <div class="location-card">
+                <h3><i class="fas fa-store"></i> Il Napolitano Vicente López</h3>
+                <div class="location-info">
+                    <div class="info-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <strong>Dirección</strong>
+                            Av. Maipú 1890, Vicente López (B1638)<br>
+                            Buenos Aires, Argentina
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <strong>Teléfono</strong>
+                            (011) 4791-6677 / WhatsApp: +54 9 11 5566-7788
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <strong>Horarios</strong>
+                            <div class="schedule">
+                                <div class="schedule-item">
+                                    <span>Lunes a Jueves</span>
+                                    <span>12:00 - 00:00</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Viernes y Sábado</span>
+                                    <span>12:00 - 01:00</span>
+                                </div>
+                                <div class="schedule-item">
+                                    <span>Domingo</span>
+                                    <span>18:00 - 00:00</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <a href="https://maps.google.com/?q=Av.+Maipu+1890,+Vicente+Lopez,+Buenos+Aires" target="_blank" class="map-button">
+                    <i class="fas fa-map"></i> Ver en Mapa
+                </a>
+            </div>
+        </div>
+
+        <!-- Delivery Section -->
+        <h2 class="section-title"><i class="fas fa-motorcycle"></i> Servicio de Delivery</h2>
+        
+        <div class="delivery-section">
+            <h3 style="text-align: center; font-family: var(--font-display); font-size: 2rem; color: var(--color-nav); margin-bottom: 1rem;">
+                Delivery Rápido y Confiable
+            </h3>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto; font-size: 1.1rem;">
+                Pedí tus pizzas favoritas desde la comodidad de tu hogar. Entrega en 30-45 minutos*
+            </p>
+
+            <div class="delivery-grid">
+                <div class="delivery-card">
+                    <i class="fas fa-clock"></i>
+                    <h4>Entrega Rápida</h4>
+                    <p>30 a 45 minutos en toda la zona de cobertura</p>
+                </div>
+                <div class="delivery-card">
+                    <i class="fas fa-pizza-slice"></i>
+                    <h4>Pizza Caliente</h4>
+                    <p>Caja térmica especial para mantener el calor</p>
+                </div>
+                <div class="delivery-card">
+                    <i class="fas fa-credit-card"></i>
+                    <h4>Múltiples Pagos</h4>
+                    <p>Efectivo, débito, crédito y transferencia</p>
+                </div>
+                <div class="delivery-card">
+                    <i class="fas fa-shipping-fast"></i>
+                    <h4>Envío Gratis</h4>
+                    <p>En pedidos mayores a $8,000</p>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="font-size: 0.9rem; color: #666;">
+                    *Los tiempos pueden variar según la demanda y condiciones climáticas
+                </p>
+            </div>
+        </div>
+
+        <!-- Coverage Zones -->
+        <div class="coverage-zones">
+            <h3 style="font-family: var(--font-display); font-size: 1.8rem; color: var(--italian-red); margin-bottom: 1rem;">
+                <i class="fas fa-map-marked-alt"></i> Zonas de Cobertura
+            </h3>
+            <p style="margin-bottom: 1rem; color: #666;">
+                Hacemos envíos a las siguientes localidades de la zona norte del Gran Buenos Aires:
+            </p>
+            
+            <div class="zones-list">
+                <div class="zone-item"><i class="fas fa-check-circle"></i> San Martín</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Villa Ballester</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Villa Maipú</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Vicente López</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Olivos</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Florida</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Munro</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Carapachay</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Villa Adelina</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> Martínez</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> San Andrés</div>
+                <div class="zone-item"><i class="fas fa-check-circle"></i> José León Suárez</div>
+            </div>
+
+            <div style="margin-top: 2rem; padding: 1.5rem; background: var(--italian-cream); border-radius: var(--border-radius-small); border-left: 4px solid var(--italian-green);">
+                <p style="margin: 0; font-weight: 500;">
+                    <i class="fas fa-info-circle" style="color: var(--italian-green);"></i>
+                    ¿Tu zona no está en la lista? ¡Consultanos! Podemos evaluar hacer envíos a otras zonas cercanas.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <footer style="background: var(--color-nav); color: white; padding: 2rem; text-align: center; margin-top: 4rem;">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <p style="margin-bottom: 1rem; font-size: 1.1rem;">
+                <i class="fas fa-phone"></i> Línea de Atención: 0810-PIZZA-IL (748-9245)
+            </p>
+            <p style="margin-bottom: 1rem;">
+                <i class="fas fa-envelope"></i> info@ilnapolitano.com.ar
+            </p>
+            <div style="margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.2);">
+                <p>&copy; 2025 Pizzeria Il Napolitano. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

@@ -9,7 +9,7 @@ if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
 
 // Validate product ID
 if (!isset($_GET['q']) || !is_numeric($_GET['q'])) {
-    $_SESSION['error'] = 'ID de producto inv\u00e1lido';
+    $_SESSION['error'] = 'ID de producto invalido';
     header('Location: welcome.php');
     exit();
 }
