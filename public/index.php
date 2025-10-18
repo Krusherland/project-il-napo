@@ -1,3 +1,14 @@
+<?php
+// PHP Logic - Data Processing
+include_once("../src/config/database.php");
+include_once("../src/classes/db.class.php");
+
+$link = new Db();
+$sql = "select p.id_product,c.category_name,p.image,p.product_name,p.price, date_format(p.start_date,'%d/%m/%Y') as date from products p inner join categories c 
+on p.id_category=c.id_category order by c.category_name,p.price";
+$stmt = $link->run($sql);
+$products = $stmt->fetchAll();
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -12,7 +23,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
         integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css?v=<?php echo time(); ?>">
     <link rel="icon" type="image/svg+xml" href="../assets/images/pizza.svg">
     <title>Pizzeria Pizze il Napolitano</title>
     <meta name="description" content="Las mejores pizzas de San Martín, Buenos Aires. Masa artesanal, 
@@ -41,41 +52,43 @@
     </header>
     <div class="main-content">
         <h2 class="animate__animated animate__rubberBand">Nuestras Pizzas</h2>
-        <div id="subtotal">
-            <p>El precio total es de: <span id="totalamount" value="0"></span></p>
-        </div>
         <div id="cart">
-            <a href="checkout.php" class="fa badge" id="badge" value="0"><i class="fa-solid fa-cart-shopping fa-xl"></i></a>
+            <div class="cart-container">
+                <a href="checkout.php" class="fa badge" id="badge" value="0"><i class="fa-solid fa-cart-shopping fa-xl"></i></a>
+                <div class="cart-tooltip">
+                    <div class="cart-info">
+                        <span class="cart-subtotal" id="cartSubtotal">Subtotal: $0.00</span>
+                    </div>
+                    <button class="clear-cart-btn" id="clearCartBtn">
+                        <i class="fa-solid fa-trash"></i>
+                        Vaciar Orden
+                    </button>
+                </div>
+            </div>
         </div>
         <ul class="gallery">
-            <?php
-            include_once("../src/config/database.php");
-            include_once("../src/classes/db.class.php");
-            $link = new Db();
-            $sql = "select p.id_product,c.category_name,p.image,p.product_name,p.price, date_format(p.start_date,'%d/%m/%Y') as date from products p inner join categories c 
-on p.id_category=c.id_category order by c.category_name,p.price";
-            $stmt = $link->run($sql);
-            $data = $stmt->fetchAll();
-            //recuperar un producto y llevarlo al li
-            foreach ($data as $row) {
-            ?>
+            <?php foreach ($products as $product): ?>
                 <li>
                     <div class="box">
-                        <figure><img src="../assets/images/<?php echo basename($row['image']) ?>" class="img-pizzas" alt="<?php echo htmlspecialchars($row['product_name']) ?>">
+                        <figure>
+                            <img src="../assets/images/<?php echo basename($product['image']); ?>" 
+                                 class="img-pizzas" 
+                                 alt="<?php echo htmlspecialchars($product['product_name']); ?>">
                             <figcaption>
-                                <h3><?php echo $row['product_name'] ?></h3>
-                                <p><?php echo $row['price'] ?></p>
-                                <time><?php echo $row['date'] ?></time>
+                                <h3><?php echo htmlspecialchars($product['product_name']); ?></h3>
+                                <p><?php echo htmlspecialchars($product['price']); ?></p>
+                                <time><?php echo htmlspecialchars($product['date']); ?></time>
                             </figcaption>
                         </figure>
-                        <button class="button" value="<?php echo $row['id_product']  ?>" data-price="<?php echo $row['price']  ?>">Añadir al carrito
+                        <button class="button" 
+                                value="<?php echo $product['id_product']; ?>" 
+                                data-price="<?php echo $product['price']; ?>">
+                            Añadir al carrito
                             <i class="fa-solid fa-cart-shopping fa-lg"></i>
                         </button>
                     </div>
                 </li>
-            <?php
-            }
-            ?>
+            <?php endforeach; ?>
         </ul>
     </div>
     <footer>
@@ -106,7 +119,8 @@ on p.id_category=c.id_category order by c.category_name,p.price";
             </div>
         </div>
     </footer>
-    <script src="../assets/js/main.js"></script>
+
+    <script src="../assets/js/main.js?v=<?php echo time(); ?>"></script>
 </body>
 
 </html>

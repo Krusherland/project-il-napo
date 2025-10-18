@@ -1,10 +1,10 @@
 <?php
 session_start();
 
-// Check if user is logged in and is admin
-if (!isset($_SESSION['email']) || $_SESSION['email'] !== 'admin@ilnapolitano.com') {
-    header('Location: ../public/login.html');
-    exit;
+// Check authentication
+if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
+    header('Location: ../../public/login.html');
+    exit();
 }
 
 require_once '../config/database.php';
@@ -224,6 +224,7 @@ $stats = $orderManager->getOrderStats();
         </div>
     </div>
 
+    <script src="../../assets/js/il-napolitano-modal.js"></script>
     <script src="../../assets/js/manage-orders.js"></script>
 </body>
 </html>

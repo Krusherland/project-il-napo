@@ -89,6 +89,7 @@ try {
         </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../../assets/js/il-napolitano-modal.js"></script>
     <script>
         // File validation and preview
         document.getElementById('imagen').addEventListener('change', function(e) {
@@ -96,7 +97,12 @@ try {
             if (file) {
                 // Validate file size (2MB)
                 if (file.size > 2000000) {
-                    alert('El archivo es demasiado grande. El tamaño máximo es 2MB.');
+                    ilNapolitanoAlert({
+                        title: 'Archivo demasiado grande',
+                        message: 'El archivo es demasiado grande. El tamaño máximo es 2MB.',
+                        type: 'warning',
+                        icon: 'fa-exclamation-triangle'
+                    });
                     e.target.value = '';
                     return;
                 }
@@ -104,7 +110,12 @@ try {
                 // Validate file type
                 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
                 if (!allowedTypes.includes(file.type)) {
-                    alert('Tipo de archivo no válido. Solo se permiten JPG, PNG y GIF.');
+                    ilNapolitanoAlert({
+                        title: 'Tipo de archivo inválido',
+                        message: 'Tipo de archivo no válido. Solo se permiten JPG, PNG y GIF.',
+                        type: 'warning',
+                        icon: 'fa-file-image'
+                    });
                     e.target.value = '';
                     return;
                 }
@@ -146,19 +157,34 @@ try {
             const categoria = document.getElementById('categoria').value;
             
             if (!producto) {
-                alert('Por favor ingrese el nombre del producto.');
+                ilNapolitanoAlert({
+                    title: 'Campo requerido',
+                    message: 'Por favor ingrese el nombre del producto.',
+                    type: 'warning',
+                    icon: 'fa-exclamation-triangle'
+                });
                 e.preventDefault();
                 return;
             }
             
             if (!precio || parseFloat(precio) <= 0) {
-                alert('Por favor ingrese un precio válido.');
+                ilNapolitanoAlert({
+                    title: 'Precio inválido',
+                    message: 'Por favor ingrese un precio válido.',
+                    type: 'warning',
+                    icon: 'fa-dollar-sign'
+                });
                 e.preventDefault();
                 return;
             }
             
             if (!categoria) {
-                alert('Por favor seleccione una categoría.');
+                ilNapolitanoAlert({
+                    title: 'Categoría requerida',
+                    message: 'Por favor seleccione una categoría.',
+                    type: 'warning',
+                    icon: 'fa-list'
+                });
                 e.preventDefault();
                 return;
             }

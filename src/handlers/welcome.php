@@ -48,7 +48,6 @@ try {
     <link rel="icon" type="image/svg+xml" href="../../assets/images/pizza.svg">
     <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
     <script src="https://cdn.datatables.net/2.3.4/js/dataTables.js"></script>
-
 </head>
 
 <body>
@@ -164,25 +163,168 @@ try {
             },
         });
 
-        function deleteProduct(cod) {
-
-            bootbox.confirm("Desea ud. eliminar realmente el id " + cod, function(result) {
-                if (result) {
-                    window.location = "delete.php?q=" + cod;
-                }
-            });
-
-        }
-
         function updateProduct(cod) {
-
             window.location = "edit.php?q=" + cod;
-
         }
     </script>
 
+    <script>
+        // Simple Il-Napolitano styled modal function
+        function showSimpleModal(options) {
+            // Remove existing modal
+            const existing = document.getElementById('simpleModal');
+            if (existing) existing.remove();
+            
+            // Create modal
+            const modal = document.createElement('div');
+            modal.id = 'simpleModal';
+            modal.innerHTML = `
+                <div style="
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    background: rgba(0, 0, 0, 0.8);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 9999;
+                    font-family: 'Work Sans', sans-serif;
+                ">
+                    <div style="
+                        background: white;
+                        border-radius: 12px;
+                        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+                        max-width: 400px;
+                        width: 90%;
+                        border: 3px solid #d4af37;
+                    ">
+                        <div style="
+                            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+                            color: white;
+                            padding: 1rem 1.5rem;
+                            display: flex;
+                            justify-content: space-between;
+                            align-items: center;
+                            border-radius: 8px 8px 0 0;
+                        ">
+                            <div style="display: flex; align-items: center; gap: 0.75rem;">
+                                <span style="font-size: 1.5rem;">🍕</span>
+                                <h3 style="margin: 0; font-family: 'Oswald', sans-serif; font-size: 1.2rem;">Il Napolitano</h3>
+                            </div>
+                            <button onclick="closeSimpleModal()" style="
+                                background: none;
+                                border: none;
+                                color: white;
+                                font-size: 1.8rem;
+                                cursor: pointer;
+                                padding: 0;
+                                width: 32px;
+                                height: 32px;
+                            ">&times;</button>
+                        </div>
+                        
+                        <div style="padding: 2rem 1.5rem; text-align: center;">
+                            <div style="margin-bottom: 1rem;">
+                                <i class="fas fa-trash-alt" style="font-size: 3rem; color: #ce2b37;"></i>
+                            </div>
+                            <h4 style="
+                                font-family: 'Oswald', sans-serif;
+                                font-size: 1.5rem;
+                                color: #2c3e50;
+                                margin: 0 0 0.75rem 0;
+                            ">${options.title}</h4>
+                            <p style="
+                                font-size: 1rem;
+                                color: #555;
+                                margin-bottom: 1.5rem;
+                                line-height: 1.4;
+                            ">${options.message}</p>
+                            
+                            ${options.extraLabel ? `
+                            <div style="
+                                background: rgba(212, 175, 55, 0.1);
+                                border: 2px solid #d4af37;
+                                border-radius: 6px;
+                                padding: 1rem;
+                                margin-bottom: 1rem;
+                                display: flex;
+                                justify-content: space-between;
+                            ">
+                                <span style="font-weight: 600; color: #2c3e50;">${options.extraLabel}:</span>
+                                <span style="font-weight: 700; color: #d4af37;">${options.extraInfo}</span>
+                            </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div style="
+                            padding: 1rem 1.5rem 1.5rem;
+                            display: flex;
+                            gap: 1rem;
+                            justify-content: center;
+                        ">
+                            <button onclick="closeSimpleModal()" style="
+                                background: white;
+                                color: #6c757d;
+                                border: 2px solid #dee2e6;
+                                border-radius: 6px;
+                                padding: 0.75rem 1.5rem;
+                                font-family: 'Oswald', sans-serif;
+                                font-weight: 600;
+                                cursor: pointer;
+                                font-size: 1rem;
+                            ">
+                                <i class="fas fa-times"></i> Cancelar
+                            </button>
+                            <button onclick="confirmSimpleModal()" style="
+                                background: linear-gradient(135deg, #ce2b37 0%, #e74c3c 100%);
+                                color: white;
+                                border: 2px solid #ce2b37;
+                                border-radius: 6px;
+                                padding: 0.75rem 1.5rem;
+                                font-family: 'Oswald', sans-serif;
+                                font-weight: 600;
+                                cursor: pointer;
+                                font-size: 1rem;
+                            ">
+                                <i class="fas fa-trash-can"></i> ${options.confirmText}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            window.modalCallback = options.onConfirm;
+        }
+        
+        function closeSimpleModal() {
+            const modal = document.getElementById('simpleModal');
+            if (modal) modal.remove();
+            window.modalCallback = null;
+        }
+        
+        function confirmSimpleModal() {
+            if (window.modalCallback) window.modalCallback();
+            closeSimpleModal();
+        }
+
+        // Delete function with simple modal
+        function deleteProduct(cod) {
+            showSimpleModal({
+                title: '¿Eliminar Producto?',
+                message: `¿Estás seguro de que quieres eliminar el producto con ID ${cod}?`,
+                confirmText: 'Sí, eliminar',
+                extraLabel: 'ID del Producto',
+                extraInfo: cod,
+                onConfirm: function() {
+                    window.location = "delete.php?q=" + cod;
+                }
+            });
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/6.0.0/bootbox.min.js" integrity="sha512-oVbWSv2O4y1UzvExJMHaHcaib4wsBMS5tEP3/YkMP6GmkwRJAa79Jwsv+Y/w7w2Vb/98/Xhvck10LyJweB8Jsw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 
 </html>

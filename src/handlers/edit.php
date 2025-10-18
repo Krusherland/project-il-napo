@@ -189,7 +189,7 @@ if ($error || !$data) {
             if (file) {
                 // Validate file size (2MB)
                 if (file.size > 2000000) {
-                    alert('El archivo es demasiado grande. El tamaño máximo es 2MB.');
+                    alert('⚠️ Archivo demasiado grande\n\nEl archivo es demasiado grande. El tamaño máximo es 2MB.');
                     e.target.value = '';
                     return;
                 }
@@ -197,7 +197,7 @@ if ($error || !$data) {
                 // Validate file type
                 const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif'];
                 if (!allowedTypes.includes(file.type)) {
-                    alert('Tipo de archivo no válido. Solo se permiten JPG, PNG y GIF.');
+                    alert('⚠️ Tipo de archivo inválido\n\nTipo de archivo no válido. Solo se permiten JPG, PNG y GIF.');
                     e.target.value = '';
                     return;
                 }

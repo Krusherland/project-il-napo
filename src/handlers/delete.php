@@ -3,7 +3,7 @@ session_start();
 
 // Check authentication
 if (!isset($_SESSION['logueado']) || !$_SESSION['logueado']) {
-    header('Location: ../login.html');
+    header('Location: ../../public/login.html');
     exit();
 }
 

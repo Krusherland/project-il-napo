@@ -226,26 +226,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function showAlert(message, type) {
-        // Remove existing alerts
-        const existingAlert = document.querySelector('.alert');
-        if (existingAlert) {
-            existingAlert.remove();
+        // Use simple browser alert instead of modal
+        if (type === 'success') {
+            alert('✅ ' + message);
+        } else if (type === 'error') {
+            alert('⚠️ ' + message);
+        } else {
+            alert('ℹ️ ' + message);
         }
-        
-        // Create new alert
-        const alert = document.createElement('div');
-        alert.className = `alert alert-${type}`;
-        alert.innerHTML = `
-            <i class="fas fa-${type === 'success' ? 'check-circle' : 'exclamation-circle'}"></i>
-            ${message}
-        `;
-        
-        // Insert at top of form
-        const formSection = document.querySelector('.checkout-form-section');
-        formSection.insertBefore(alert, formSection.firstChild);
-        
-        // Auto remove after 5 seconds
-        setTimeout(() => alert.remove(), 5000);
     }
     
     // Global function for quantity updates
